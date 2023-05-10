@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   const query = {};
 
   // Fetch dashboard data from database using a Promise
-  Dashboard.find(query)
+  Dashboard.findOne(query)
     .then(dashboard => {
       res.json(dashboard);
     })

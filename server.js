@@ -1,15 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const dashboardRouter = require('./routes/dashboardRoutes');
 const productsRouter = require('./routes/productRoutes');
 
 const app = express();
 
 // Middleware
-app.use(bodyParser.json());
-app.use(cors());
+app.use(express.json());
 
 //DB config
 const MONGODB_URI = process.env.MONGODB_URI || require('./config').mongoDB_URI;
@@ -24,11 +21,9 @@ db.once('open', () => {
 })
 
 
-
 // Check for DB Errors
 db.on('error', (error) => {
    console.log(error);
-   mongoose.set('StrictQuery', true);
 })
 
 // Routes
