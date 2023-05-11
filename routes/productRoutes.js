@@ -9,7 +9,7 @@ const Product = require('../models/products');
 router.get('/:id', (req, res) => {
   // Fetch product from database by ID
   const query = { _id: req.params.id };
-  Product.findOne(query)
+  Product.find(query)
     .then(product => {
       res.json(product);
     })
