@@ -4,38 +4,47 @@ const router = express.Router();
 // Dashboard Model
 const Dashboard = require('../models/dashboard');
 
-// @route GET /dashboard
-// @desc Get dashboard data
 router.get('/:id', (req, res) => {
-  // Define query object to fetch the dashboard data
-  const query = {_id: req.params.id};
-
-  // Fetch dashboard data from database using a Promise
+  // Fetch product from database by ID
+  const query = { _id: req.params.id };
   Dashboard.find(query)
     .then(dashboard => {
       res.json(dashboard);
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send('Server error');
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: 'Error retrieving product from database.' });
     });
 });
 
-// @route PUT /dashboard
-// @desc Update dashboard data
-router.get('/:id', (req, res)  => {
-  // Define query object to update the dashboard data
-  const query = {_id: req.params.id};
-
-  // Update dashboard data in the database using a Promise
-  Dashboard.findOneAndUpdate(query, req.body, { new: true, upsert: true })
+// @route GET /products
+// @desc Get ALL products
+router.get('/', (req, res) => {
+  // Fetch all products from database
+  Dashboard.find({})
     .then(dashboard => {
       res.json(dashboard);
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send('Server error');
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: 'Error retrieving products from database.' });
     });
 });
+
+
+// @route PUT api/products/:id
+// @desc Update a product
+router.put('/:id', (req, res) => {
+  // Update a product in the database
+  Dashboard.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true })
+    .then(dashboard => {
+      res.json(dashboard);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: 'Error updating product in database.' });
+    });
+});
+
 
 module.exports = router;
