@@ -27,7 +27,7 @@ db.on('error', (error) => {
 })
 
 // Routes
-app.use('/api/dashboard', dashboardRouter);
+// app.use('/api/dashboard', dashboardRouter);
 app.use('/api/products', productsRouter);
 
 // Define the PORT
