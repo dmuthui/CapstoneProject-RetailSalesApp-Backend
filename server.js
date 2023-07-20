@@ -33,7 +33,7 @@ db.on('error', (error) => {
 
 // Routes
 app.use('/api', productsRouter);
-app.use('/api/quotation', quotationRouter); 
+app.use('/api', quotationRouter); 
 app.use('/api', invoiceRouter);
 app.use('/api', receiptRouter);
 app.use('/api', salesAgentRouter);

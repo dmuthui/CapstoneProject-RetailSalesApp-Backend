@@ -6,14 +6,23 @@ const Product = require('../models/products');
 const Shop = require('../models/shopLocator');
 
 // POST /quotations
-router.post('/', async (req, res) => {
+router.post('/quotation', async (req, res) => {
   try {
+    console.log('Request Body:', req.body);
     const { agentName, productName, shopName, quantity, companyName, customerName } = req.body;
+
+    console.log('Agent Name:', agentName);
+    console.log('Product Name:', productName);
+    console.log('Shop Name:', shopName);
 
     // Retrieve the agent, product, and shop from the respective schemas
     const agent = await SalesAgent.findOne({ name: agentName });
     const product = await Product.findOne({ name: productName });
-    const shop = await Shop.findOne({ name: shopName });
+    const shop = await Shop.findOne({ shopName: shopName });
+
+    console.log('Agent:', agent);
+    console.log('Product:', product);
+    console.log('Shop:', shop);
 
     // Check if agent, product, and shop exist in the database
     if (!agent || !product || !shop) {
@@ -28,7 +37,7 @@ router.post('/', async (req, res) => {
     const quotationData = {
       agent: agent.name,
       product: product.name,
-      shop: shop.name,
+      shop: shop.shopName, // Include the shop name from the shop object
       quantity,
       companyName,
       customerName,
