@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const productsRouter = require('./routes/productRoutes');
+const quotationRouter = require('./routes/quotationRoutes');
+const invoiceRouter = require('./routes/invoiceRoutes')
+const receiptRouter = require('./routes/receiptRoutes')
+const salesAgentRouter = require('./routes/salesAgentRoutes')
+const shopLocatorRouter = require('./routes/shopLocatorRoutes')
 
 const app = express();
 
@@ -27,8 +32,12 @@ db.on('error', (error) => {
 });
 
 // Routes
-// app.use('/api/dashboard', dashboardRouter);
-app.use('/api/products', productsRouter);
+app.use('/api', productsRouter);
+app.use('/api/quotation', quotationRouter); 
+app.use('/api', invoiceRouter);
+app.use('/api', receiptRouter);
+app.use('/api', salesAgentRouter);
+app.use('/api', shopLocatorRouter);
 
 // Define the PORT
 const PORT = process.env.PORT || 5005;
