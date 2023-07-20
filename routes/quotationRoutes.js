@@ -24,7 +24,7 @@ router.post('/quotation', async (req, res) => {
     console.log('Product:', product);
     console.log('Shop:', shop);
 
-    // Check if agent, product, and shop exist in the database
+    // To Check if agent, product, and shop exist in the database
     if (!agent || !product || !shop) {
       return res.status(404).json({ error: 'Agent, product, or shop not found' });
     }
@@ -37,7 +37,7 @@ router.post('/quotation', async (req, res) => {
     const quotationData = {
       agent: agent.name,
       product: product.name,
-      shop: shop.shopName, // Include the shop name from the shop object
+      shop: shop.shopName, 
       quantity,
       companyName,
       customerName,
