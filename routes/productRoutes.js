@@ -9,7 +9,7 @@ const Product = require('../models/products');
 router.get('/:id', (req, res) => {
   // Fetch product from database by ID
   const query = { _id: req.params.id };
-  Product.find(query)
+  Product.findById(req.params.id)
     .then(product => {
       res.json(product);
     })
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
     description: req.body.description,
     price: req.body.price,
     quantity: req.body.quantity,
-    image:req.body.image
+    image: req.body.image
   });
 
   newProduct.save()
