@@ -1,42 +1,71 @@
-const express = require('express'); 
+const express = require('express');
 const router = express.Router();
 const Invoice = require('../models/invoice');
+const SalesAgent = require('../models/salesAgent');
+const Product = require('../models/products');
+const Shop = require('../models/shopLocator');
 
 // Generate invoice
-router.get('/invoice', async (req, res) => {
+router.post('/invoice', async (req, res) => {
   try {
-    const invoices = await Invoice.find();
+    console.log('Request Body:', req.body);
+    const { agentName, productName, shopName, quantity, companyName, customerName } = req.body;
 
-    if (invoices.length === 0) {
-      return res.status(404).json({ message: 'No invoices found' });
+    console.log('Agent Name:', agentName);
+    console.log('Product Name:', productName);
+    console.log('Shop Name:', shopName);
+
+    // Retrieve the agent, product, and shop from the respective schemas
+    const agent = await SalesAgent.findOne({ name: agentName });
+    const product = await Product.findOne({ name: productName });
+    const shop = await Shop.findOne({ shopName: shopName });
+
+    console.log('Agent:', agent);
+    console.log('Product:', product);
+    console.log('Shop:', shop);
+
+    // To Check if agent, product, and shop exist in the database
+    if (!agent || !product || !shop) {
+      return res.status(404).json({ error: 'Agent, product, or shop not found' });
     }
 
-    res.json({ invoices });
+    // Generate date and totalPrice values
+    const date = new Date();
+    const totalPrice = product.price * quantity;
+
+    // Create the invoice object
+    const invoiceData = {
+      agent: agent.name,
+      product: product.name,
+      shop: shop.shopName, 
+      quantity,
+      companyName,
+      customerName,
+      date,
+      totalPrice
+    };
+
+    // Save the invoice to the database
+    const newInvoice = new Invoice(invoiceData);
+    const savedInvoice = await newInvoice.save();
+
+    res.json(savedInvoice);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error creating invoice:', error);
+    res.status(500).json({ error: 'Error creating invoice' });
   }
 });
 
-// Add invoice
-router.post('/invoice', async (req, res) => {
-  const { items, totalAmount, date, agent,shop,companyName,customerName, } = req.body;
-
+// GET /quotations
+router.get('/', async (req, res) => {
   try {
-    const invoice = new Invoice({
-      items,
-      totalAmount,
-      date: date || new Date(),
-      agent,
-      shop,
-      companyName,
-      customerName, 
-    });
+    // Retrieve all invoices from the database
+    const invoice = await Invoice.find();
 
-    await invoice.save();
-
-    res.json({ message: 'Invoice added successfully' });
+    res.json(invoice);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error retrieving invoices:', error);
+    res.status(500).json({ error: 'Error retrieving invoices' });
   }
 });
 
