@@ -7,6 +7,7 @@ const invoiceRouter = require('./routes/invoiceRoutes')
 const receiptRouter = require('./routes/receiptRoutes')
 const salesAgentRouter = require('./routes/salesAgentRoutes')
 const shopLocatorRouter = require('./routes/shopLocatorRoutes')
+const inventoryRouter = require('./routes/inventoryRoutes')
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api', invoiceRouter);
 app.use('/api', receiptRouter);
 app.use('/api', salesAgentRouter);
 app.use('/api', shopLocatorRouter);
+app.use('/api', inventoryRouter);
 
 // Define the PORT
 const PORT = process.env.PORT || 5005;

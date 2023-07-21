@@ -6,11 +6,15 @@ const salesAgentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  badgeNumber: {
+  StaffNumber: {
     type: String,
     required: true,
     unique: true,
   },
+  shop: { 
+    type: String,
+    default: '',
+    required: true },
   contact: {
     type: String,
     required: true,
