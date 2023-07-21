@@ -4,6 +4,7 @@ const Quotation = require('../models/quotation');
 const SalesAgent = require('../models/salesAgent');
 const Product = require('../models/products');
 const Shop = require('../models/shopLocator');
+const Inventory = require('../models/inventory');
 
 // POST /quotations
 router.post('/quotation', async (req, res) => {
@@ -19,6 +20,7 @@ router.post('/quotation', async (req, res) => {
     const agent = await SalesAgent.findOne({ name: agentName });
     const product = await Product.findOne({ name: productName });
     const shop = await Shop.findOne({ shopName: shopName });
+    const inventoryItem = await Inventory.findOne({ name: productName });
 
     console.log('Agent:', agent);
     console.log('Product:', product);
@@ -29,6 +31,11 @@ router.post('/quotation', async (req, res) => {
       return res.status(404).json({ error: 'Agent, product, or shop not found' });
     }
 
+    // Check if the product is available in the inventory
+    if (!inventoryItem || inventoryItem.quantity < quantity) {
+      return res.status(400).json({ error: 'Product is out of stock or insufficient quantity in inventory' });
+    }
+
     // Generate createdAt and totalPrice values
     const createdAt = new Date();
     const totalPrice = product.price * quantity;
@@ -37,7 +44,7 @@ router.post('/quotation', async (req, res) => {
     const quotationData = {
       agent: agent.name,
       product: product.name,
-      shop: shop.shopName, 
+      shop: shop.shopName,
       quantity,
       companyName,
       customerName,
@@ -48,6 +55,10 @@ router.post('/quotation', async (req, res) => {
     // Save the quotation to the database
     const newQuotation = new Quotation(quotationData);
     const savedQuotation = await newQuotation.save();
+
+    // Deduct the quoted quantity from the inventory
+    inventoryItem.quantity -= quantity;
+    await inventoryItem.save();
 
     res.json(savedQuotation);
   } catch (error) {
