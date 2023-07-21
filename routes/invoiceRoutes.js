@@ -19,13 +19,17 @@ router.get('/invoice', async (req, res) => {
 
 // Add invoice
 router.post('/invoice', async (req, res) => {
-  const { items, totalAmount, date } = req.body;
+  const { items, totalAmount, date, agent,shop,companyName,customerName, } = req.body;
 
   try {
     const invoice = new Invoice({
       items,
       totalAmount,
       date: date || new Date(),
+      agent,
+      shop,
+      companyName,
+      customerName, 
     });
 
     await invoice.save();
