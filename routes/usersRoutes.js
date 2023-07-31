@@ -54,13 +54,8 @@ router.post('/user/login', async (req, res) => {
 // Route to logout
 router.post('/user/logout', async (req, res) => {
   try {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ error: 'Error logging out.' });
-      }
-      // Successfully logged out, send a success response.
-      res.json({ message: 'Logout successful' });
-    });
+    // You don't need to do anything on the backend for logout when using session storage on the frontend
+    res.json({ message: 'Logout successful' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error logging out.' });
