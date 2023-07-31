@@ -7,27 +7,27 @@ const Shop = require('../models/shopLocator');
 const Inventory = require('../models/inventory');
 
 // POST /quotations
-router.post('/Quotation', async (req, res) => {
+router.post('/quotation', async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-    const { agentId, productName, shopName, quantity, companyName, customerName } = req.body;
+    const { agentName, product, shopName, quantity, companyName, customerName } = req.body;
 
-    console.log('Agent ID:', agentId);
-    console.log('Product Name:', productName);
+    console.log('Agent Name:', agentName);
+    console.log('Product Name:', product);
     console.log('Shop Name:', shopName);
 
     // Retrieve the agent, product, and shop from the respective schemas
-    const agent = await SalesAgent.findById(agentId);
-    const product = await Product.findOne({ name: productName });
+    const agent = await SalesAgent.findOne({name: agentName});
+    const productName = await Product.findOne({ name: product });
     const shop = await Shop.findOne({ shopName: shopName });
-    const inventoryItem = await Inventory.findOne({ name: productName });
+    const inventoryItem = await Inventory.findOne({ name: product });
 
     console.log('Agent:', agent);
-    console.log('Product:', product);
+    console.log('Product:', productName);
     console.log('Shop:', shop);
 
     // To Check if agent, product, and shop exist in the database
-    if (!agent || !product || !shop) {
+    if (!agent || !productName || !shop) {
       return res.status(404).json({ error: 'Agent, product, or shop not found' });
     }
 
@@ -37,19 +37,17 @@ router.post('/Quotation', async (req, res) => {
     }
 
     // Generate createdAt and totalPrice values
-    const createdAt = new Date();
-    const totalPrice = product.price * quantity;
+    const totalPrice = productName.price * quantity;
 
     // Create the quotation object
     const quotationData = {
       agentName: agent._id, // Use agent._id instead of agentName
-      product,
-      shopName, 
-      quantity,
-      companyName,
-      customerName,
-      createdAt,
-      totalPrice,
+      product: productName._id,
+      shopName: shopName, 
+      quantity: parseInt(quantity),
+      companyName: companyName,
+      customerName: customerName,
+      totalPrice: parseInt(totalPrice),
     };
 
     // Save the quotation to the database
@@ -65,7 +63,8 @@ router.post('/Quotation', async (req, res) => {
     console.error('Error creating quotation:', error);
     res.status(500).json({ error: 'Error creating quotation' });
   }
-});
+ });
+
 
 
 // GET /quotations

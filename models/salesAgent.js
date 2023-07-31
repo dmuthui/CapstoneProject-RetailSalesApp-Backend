@@ -5,14 +5,14 @@ const salesAgentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  StaffNumber: {
+  staffNumber: {
     type: String,
     required: true,
     unique: true,
   },
   shop: { 
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shop',
+    ref: 'ShopLocator',
     required: true,
   },
   contact: {
