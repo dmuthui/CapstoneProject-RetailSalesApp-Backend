@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Quotation = require('../models/quotation');
+const Quotation = require('../models/Quotation');
 const SalesAgent = require('../models/salesAgent');
 const Product = require('../models/products');
 const Shop = require('../models/shopLocator');
 const Inventory = require('../models/inventory');
 
 // POST /quotations
-router.post('/quotation', async (req, res) => {
+router.post('/Quotation', async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-    const { agentName, productName, shopName, quantity, companyName, customerName } = req.body;
+    const { agentId, productName, shopName, quantity, companyName, customerName } = req.body;
 
-    console.log('Agent Name:', agentName);
+    console.log('Agent ID:', agentId);
     console.log('Product Name:', productName);
     console.log('Shop Name:', shopName);
 
     // Retrieve the agent, product, and shop from the respective schemas
-    const agent = await SalesAgent.findOne({ name: agentName });
+    const agent = await SalesAgent.findById(agentId);
     const product = await Product.findOne({ name: productName });
     const shop = await Shop.findOne({ shopName: shopName });
     const inventoryItem = await Inventory.findOne({ name: productName });
@@ -42,14 +42,14 @@ router.post('/quotation', async (req, res) => {
 
     // Create the quotation object
     const quotationData = {
-      agent: agent.name,
-      product: product.name,
-      shop: shop.shopName,
+      agentName: agent._id, // Use agent._id instead of agentName
+      product,
+      shopName, 
       quantity,
       companyName,
       customerName,
       createdAt,
-      totalPrice
+      totalPrice,
     };
 
     // Save the quotation to the database
@@ -66,6 +66,7 @@ router.post('/quotation', async (req, res) => {
     res.status(500).json({ error: 'Error creating quotation' });
   }
 });
+
 
 // GET /quotations
 router.get('/', async (req, res) => {

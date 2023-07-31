@@ -3,32 +3,35 @@ const router = express.Router();
 const Product = require('../models/products');
 const Inventory = require('../models/inventory');
 
-// @route GET /products/:id
-// @desc Get product by ID
-router.get('/:id', (req, res) => {
-  // Fetch product from database by ID
-  const query = { _id: req.params.id };
-  Product.findById(req.params.id)
-    .then(product => {
-      res.json(product);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({ error: 'Error retrieving product from database.' });
-    });
-});
-
 // @route GET /products
 // @desc Get ALL products
 router.get('/products', (req, res) => {
-  // Fetch all products from database
+  // Fetch all products from the database
   Product.find({})
     .then(products => {
       res.json(products);
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({ error: 'Error retrieving products from database.' });
+      res.status(500).json({ error: 'Error retrieving products from the database.' });
+    });
+});
+
+// @route GET /products/:id
+// @desc Get product by ID
+router.get('/:id', (req, res) => {
+  // Fetch product from the database by ID
+  const query = { _id: req.params.id };
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found.' });
+      }
+      res.json(product);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: 'Error retrieving product from the database.' });
     });
 });
 
@@ -62,11 +65,11 @@ router.post('/products', async (req, res) => {
     res.json(newProduct);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error creating product in database.' });
+    res.status(500).json({ error: 'Error creating product in the database.' });
   }
 });
 
-// @route PUT api/products/:id
+// @route PUT /products/:id
 // @desc Update a product
 router.put('/:id', async (req, res) => {
   try {
@@ -93,7 +96,7 @@ router.put('/:id', async (req, res) => {
     res.json(updatedProduct);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error updating product in database.' });
+    res.status(500).json({ error: 'Error updating product in the database.' });
   }
 });
 
