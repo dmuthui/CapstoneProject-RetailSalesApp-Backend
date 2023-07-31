@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const quotationSchema = new Schema({
-  customerName: { type: String, default: '', required: true },
-  product: { type: String, default: '', required: true },
-  quantity: { type: Number, default: 0, required: true },
-  totalPrice: { type: Number, default: 0, required: true },
+  agentName: { type: Schema.Types.ObjectId, ref: 'SalesAgent', required: true },
+  product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+  shopName: { type: String, required: true },
+  quantity: { type: Number, required: true, min: 1 },
+  companyName: { type: String, required: true },
+  customerName: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  agent: { type: String, default: '', required: true },
-  shop: { type: String, default: '', required: true },
-  companyName: { type: String, default: '', required: true }
+  totalPrice: { type: Number, required: true },
 });
 
 const Quotation = mongoose.model('Quotation', quotationSchema);

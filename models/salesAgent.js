@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Defines the SalesAgent schema
 const salesAgentSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -12,16 +11,16 @@ const salesAgentSchema = new mongoose.Schema({
     unique: true,
   },
   shop: { 
-    type: String,
-    default: '',
-    required: true },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shop',
+    required: true,
+  },
   contact: {
     type: String,
     required: true,
   },
 });
 
-// Creates the SalesAgent model
 const SalesAgent = mongoose.model('SalesAgent', salesAgentSchema);
 
 module.exports = SalesAgent;

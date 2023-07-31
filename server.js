@@ -15,7 +15,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // Enable CORS
+app.use(cors());
 
 // DB config
 const MONGODB_URI = process.env.MONGODB_URI || require('./config').mongoDB_URI;
