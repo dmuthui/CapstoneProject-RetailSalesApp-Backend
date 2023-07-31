@@ -19,7 +19,7 @@ router.get('/products', (req, res) => {
 
 // @route GET /products/:id
 // @desc Get product by ID
-router.get('/:id', (req, res) => {
+router.get('/products/:id', (req, res) => {
   // Fetch product from the database by ID
   const query = { _id: req.params.id };
   Product.findById(req.params.id)
@@ -71,7 +71,7 @@ router.post('/products', async (req, res) => {
 
 // @route PUT /products/:id
 // @desc Update a product
-router.put('/:id', async (req, res) => {
+router.put('/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, quantity, image } = req.body;

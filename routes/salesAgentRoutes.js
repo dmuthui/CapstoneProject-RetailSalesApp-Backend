@@ -9,6 +9,7 @@ router.get('/salesAgent', async (req, res) => {
     const salesAgents = await SalesAgent.find().populate('shop');
     res.json(salesAgents);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -17,7 +18,7 @@ router.get('/salesAgent', async (req, res) => {
 router.post('/salesAgent', async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-    const { shopName, name, StaffNumber, contact } = req.body; 
+    const { shopName, name, staffNumber, contact } = req.body; 
 
     console.log('Shop Name:', shopName);
     const shop = await Shop.findOne({ shopName: shopName }); // Use shopName instead of shopId
@@ -31,15 +32,16 @@ router.post('/salesAgent', async (req, res) => {
     // Create a new SalesAgent instance and set its properties
     const newSalesAgent = new SalesAgent({
       shop: shop._id, // Use shop._id instead of shopName
-      name,
-      StaffNumber,
-      contact,
+      name:name,
+      staffNumber:staffNumber,
+      contact:contact,
     });
 
     // Save the new sales agent to the database
     await newSalesAgent.save();
     res.status(201).json(newSalesAgent);
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: 'Bad Request' });
   }
 });
