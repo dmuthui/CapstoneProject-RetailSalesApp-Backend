@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const productsRouter = require('./routes/productRoutes');
 const quotationRouter = require('./routes/quotationRoutes');
 const invoiceRouter = require('./routes/invoiceRoutes')
@@ -17,6 +18,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
+
+// Middleware for parsing URL-encoded data
+app.use(express.urlencoded({ extended: true }));
 
 // DB config
 const MONGODB_URI = process.env.MONGODB_URI || require('./config').mongoDB_URI;
