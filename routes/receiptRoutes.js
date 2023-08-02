@@ -57,7 +57,7 @@ router.post('/receipt', async (req, res) => {
 });
 
 // GET Receipt
-router.get('/', async (req, res) => {
+router.get('/receipt', async (req, res) => {
   try {
     // Retrieve all receipt from the database
     const receipt = await Receipt.find();

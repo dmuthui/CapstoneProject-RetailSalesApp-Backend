@@ -10,6 +10,7 @@ const shopLocatorRouter = require('./routes/shopLocatorRoutes')
 const inventoryRouter = require('./routes/inventoryRoutes')
 const usersRouter = require('./routes/usersRoutes')
 const shoppingCartRouter = require('./routes/shoppingCartRoutes')
+const mpesaRoutes = require('./routes/mpesaRoutes');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api', shopLocatorRouter);
 app.use('/api', inventoryRouter);
 app.use('/api', usersRouter);
 app.use('/api', shoppingCartRouter);
+app.use('/api', mpesaRoutes);
 
 // Define the PORT
 const PORT = process.env.PORT || 5005;
