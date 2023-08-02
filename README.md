@@ -1,15 +1,15 @@
-### Retail Sales App Backend
+# Retail Sales App Backend
 
 This is the backend server for the Retail Sales App, which is a web application for managing product sales, generating Quotation, invoices, and receipts. The backend is built using Node.js, Express.js, and MongoDB.
 
 ## Contributors
-# Diana
-# David
-# Mary
-# Pius
-# Arthanasias
+### Diana
+### David
+### Mary
+### Pius
+### Arthanasias
 
-### Table of Contents
+## Table of Contents
 
 ## Installation
 Clone the repository to your local machine:
@@ -69,37 +69,37 @@ For a complete list of dependencies, please refer to the package.json file.
 ## Contributing
 If you find any issues or have suggestions for improvement, feel free to create an issue or submit a pull request. Contributions are welcome!
 
-### Future Enhancements
+## Future Enhancements
 While the Retail Sales App is currently functional with its core features, there are several exciting enhancements that can be considered for future development:
 
-# Customer Management System
+### Customer Management System
 Implement a customer management system to allow users to store and manage customer information. This feature would enable personalized customer experiences, such as loyalty programs and targeted marketing campaigns.
 
-# Inventory Management
+### Inventory Management
 Introduce an inventory management system to keep track of product stock levels, automated stock alerts, and reorder points. This feature would help prevent stockouts and improve inventory control.
 
-# Sales Analytics and Reporting
+### Sales Analytics and Reporting
 Incorporate sales analytics and reporting to provide insights into sales performance, popular products, and revenue trends. This data-driven approach would enable better decision-making and strategic planning.
 
-# User Authentication and Authorization
+### User Authentication and Authorization
 Add user authentication and authorization to secure sensitive data and restrict access to certain functionalities based on user roles. This enhancement would ensure that only authorized personnel can access critical features.
 
-# Online Payment Integration
+### Online Payment Integration
 Integrate popular online payment gateways (e.g., PayPal, M-pesa) to facilitate secure and convenient online payments. This would enhance the app's usability and offer customers multiple payment options.
 
-# Mobile Application
+### Mobile Application
 Develop a mobile application for the Retail Sales App to expand its reach and provide users with a seamless mobile experience. The app could be available on iOS and Android platforms.
 
-# Multi-Language Support
+### Multi-Language Support
 Implement multi-language support to cater to a diverse user base. This feature would allow users to switch between different languages based on their preferences.
 
-# Email Notifications
+### Email Notifications
 Introduce email notifications for various events, such as order confirmations, invoice generation, and shipment updates. Email notifications would keep customers informed and engaged throughout the buying process.
 
-# Data Backup and Restore
+### Data Backup and Restore
 Set up automated data backup and restore mechanisms to safeguard crucial data and ensure business continuity in case of data loss or system failures.
 
-# Discounts and Coupons
+### Discounts and Coupons
 Incorporate a discounts and coupons system to allow users to apply promotional codes during checkout. This would incentivize customers and boost sales.
 
 These future enhancements would take the Retail Sales App to the next level, providing a more comprehensive and feature-rich solution for managing product sales and enhancing customer experience.
