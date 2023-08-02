@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Quotation = require('../models/Quotation');
+const Quotation = require('../models/quotation');
 const SalesAgent = require('../models/salesAgent');
 const Product = require('../models/products');
 const Shop = require('../models/shopLocator');
