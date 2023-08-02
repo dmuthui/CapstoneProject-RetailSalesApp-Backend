@@ -56,8 +56,8 @@ router.post('/invoice', async (req, res) => {
   }
 });
 
-// GET /quotations
-router.get('/', async (req, res) => {
+// GET invoice
+router.get('/invoice', async (req, res) => {
   try {
     // Retrieve all invoices from the database
     const invoice = await Invoice.find();
