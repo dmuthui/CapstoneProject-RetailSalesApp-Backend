@@ -11,6 +11,7 @@ const shopLocatorRouter = require('./routes/shopLocatorRoutes')
 const inventoryRouter = require('./routes/inventoryRoutes')
 const usersRouter = require('./routes/usersRoutes')
 const shoppingCartRouter = require('./routes/shoppingCartRoutes')
+const Receipt = require('./models/receipt');
 const mpesaRoutes = require('./routes/mpesaRoutes');
 
 const app = express();
