@@ -6,7 +6,7 @@ const Inventory = require('../models/inventory');
 // @route GET /products
 // @desc Get ALL products
 router.get('/products', (req, res) => {
-  // Fetch all products from the database
+  // Fetch all products from the Mongo database
   Product.find({})
     .then(products => {
       res.json(products);
