@@ -10,24 +10,24 @@ const Inventory = require('../models/inventory');
 router.post('/quotation', async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-    const { agentName, productName, shopName, quantity, companyName, customerName } = req.body;
+    const { agentName, product, shopName, quantity, companyName, customerName } = req.body;
 
     console.log('Agent Name:', agentName);
-    console.log('Product Name:', productName);
+    console.log('Product Name:', product);
     console.log('Shop Name:', shopName);
 
     // Retrieve the agent, product, and shop from the respective schemas
-    const agent = await SalesAgent.findOne({ name: agentName });
-    const product = await Product.findOne({ name: productName });
+    const agent = await SalesAgent.findOne({name: agentName});
+    const productName = await Product.findOne({ name: product });
     const shop = await Shop.findOne({ shopName: shopName });
-    const inventoryItem = await Inventory.findOne({ name: productName });
+    const inventoryItem = await Inventory.findOne({ name: product });
 
     console.log('Agent:', agent);
-    console.log('Product:', product);
+    console.log('Product:', productName);
     console.log('Shop:', shop);
 
     // To Check if agent, product, and shop exist in the database
-    if (!agent || !product || !shop) {
+    if (!agent || !productName || !shop) {
       return res.status(404).json({ error: 'Agent, product, or shop not found' });
     }
 
@@ -37,19 +37,17 @@ router.post('/quotation', async (req, res) => {
     }
 
     // Generate createdAt and totalPrice values
-    const createdAt = new Date();
-    const totalPrice = product.price * quantity;
+    const totalPrice = productName.price * quantity;
 
     // Create the quotation object
     const quotationData = {
-      agent: agent.name,
-      product: product.name,
-      shop: shop.shopName,
-      quantity,
-      companyName,
-      customerName,
-      createdAt,
-      totalPrice
+      agentName: agent._id, // Use agent._id instead of agentName
+      product: productName._id,
+      shopName: shopName, 
+      quantity: parseInt(quantity),
+      companyName: companyName,
+      customerName: customerName,
+      totalPrice: parseInt(totalPrice),
     };
 
     // Save the quotation to the database
@@ -65,7 +63,9 @@ router.post('/quotation', async (req, res) => {
     console.error('Error creating quotation:', error);
     res.status(500).json({ error: 'Error creating quotation' });
   }
-});
+ });
+
+
 
 // GET /quotations
 router.get('/', async (req, res) => {

@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 
 // Route to register a new user
-router.post('/user', async (req, res) => {
+router.post('/user/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -28,7 +28,7 @@ router.post('/user', async (req, res) => {
 });
 
 // Route to login
-router.post('/user', async (req, res) => {
+router.post('/user/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -48,6 +48,17 @@ router.post('/user', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error logging in.' });
+  }
+});
+
+// Route to logout
+router.post('/user/logout', async (req, res) => {
+  try {
+    // You don't need to do anything on the backend for logout when using session storage on the frontend
+    res.json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error logging out.' });
   }
 });
 

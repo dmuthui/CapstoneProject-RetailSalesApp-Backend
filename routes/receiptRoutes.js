@@ -57,10 +57,15 @@ router.post('/receipt', async (req, res) => {
 });
 
 // GET Receipt
-router.get('/', async (req, res) => {
+router.get('/receipt/:invoiceId', async (req, res) => {
   try {
-    // Retrieve all receipt from the database
-    const receipt = await Receipt.find();
+    const invoiceId = req.params.invoiceId;
+    // Retrieve receipt data based on the invoiceId from the database
+    const receipt = await Receipt.findOne({ _id: invoiceId });
+
+    if (!receipt) {
+      return res.status(404).json({ error: 'Receipt not found' });
+    }
 
     res.json(receipt);
   } catch (error) {
